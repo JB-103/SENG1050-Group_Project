@@ -49,9 +49,25 @@ void freeMemory(TreeNode*, HashTable*);
 int main(void) {
     return kSuccess;
 }
+/**
+ * FUNCTION: calculateHash
+ * DESCRIPTION:
+ * Calculates hash value for specified string using the djb2 algorithm.
+ * PARAMETERS:
+ * const char* str: Pointer to string.
+ * RETURNS:
+ * unsigned long: Hash value for the string.
+ * CREDIT: Daniel J. Bernstein (djb2 hash function).
+ */
+unsigned long calculateHash(const char* str) {
+    unsigned long hash = 5381;
+    int c;
 
-unsigned long calculateHash(const char* string) {
-    return kSuccess;
+    while ((c = *str++) != '\0') {
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
+
+    return hash % kBuckets;
 }
 /**
  * FUNCTION: createHashTable
