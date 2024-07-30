@@ -115,7 +115,22 @@ void collectDataFromFile() {
  * TreeNode*: Pointer to newly created node.
  */
 TreeNode* createTreeNode(char* pDestination, int weight, float value) {
-    return NULL;
+//Allocate memory for new node to insert.
+    TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
+//Handle allocation failure
+	if (newNode == NULL) {
+		printf("Memory allocation failed\n");
+		return NULL;
+	}
+//Copy data to newly allocated node.
+	newNode->pDestination = (char*)malloc(strlen(pDestination) + 1);
+    strcpy(newNode->pDestination, pDestination);
+    newNode->weight = weight;
+    newNode->value = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+//Return node.
+    return newNode;
 }
 /**
  * FUNCTION: insertInTree
