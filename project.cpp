@@ -79,7 +79,17 @@ unsigned long calculateHash(const char* str) {
  * Node*: Pointer to newly created hash table (array of pointers).
  */
 HashTable* createHashTable() {
-    return NULL;
+    HashTable* hashTable = (HashTable*)malloc(sizeof(HashTable));
+    if (hashTable == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+
+    for (int counter = 0; counter < kBuckets; counter++) {
+        hashTable->table[counter] = NULL;
+    }
+
+    return hashTable;
 }
 /**
  * FUNCTION: collectDataFromFile
@@ -91,7 +101,7 @@ HashTable* createHashTable() {
  * void: No return value.
  */
 void collectDataFromFile() {
-
+ 
 }
 /**
  * FUNCTION: createTreeNode
