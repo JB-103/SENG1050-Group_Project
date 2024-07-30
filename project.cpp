@@ -4,12 +4,13 @@
 * PROGRAMMER : Justin Blake & Josh Visentin.
 * FIRST VERSION : 2024-07-26
 * DESCRIPTION:
-* The functions in this file are used to utilize tree data structures to 
+* The functions in this file are used to utilize tree data structures to
 * manage various products & display output based on specific requirements.
 */
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
+#include <stdlib.h>
 #pragma warning (disable: 4996)
 
 #pragma region Constants
@@ -17,6 +18,17 @@
 #define kMaxNames 5000
 #define kMaxLength 21
 #define kBuckets 127
+#define kMinWeight 100
+#define kMaxWeight 50000
+#define kMinValue 10
+#define kMaxValue 2000
+//Menu Items.
+#define kMenu1 1
+#define kMenu2 2
+#define kMenu3 3
+#define kMenu4 4
+#define kMenu5 5
+#define kMenuExit 6
 //Status Codes.
 #define kSuccess 0
 #define kFileOpenError -1
@@ -30,7 +42,7 @@ struct TreeNode {
     float value;
     TreeNode* left;
     TreeNode* right;
-}; 
+};
 struct HashTable {
     TreeNode* table[kBuckets];
 };
@@ -47,6 +59,48 @@ void freeMemory(TreeNode*, HashTable*);
 #pragma endregion
 
 int main(void) {
+    char* userInput{};
+    int menuInput = -1;
+
+
+    while (true) {
+        printf("Menu:\n");
+        printf("1. Display all the parcels details for a country.\n");
+        printf("2. Display higher/lower weights of country & parcel.\n");
+        printf("3. Display total parcel load & valuation for country.\n");
+        printf("4. Display cheapest & most expensive parcels.\n");
+        printf("5. Display lightest & heaviest parcel.\n");
+        printf("6. Exit.\n");
+
+        fgets(userInput, kMaxLength, stdin);
+        menuInput = atoi(userInput);
+
+        switch (menuInput) {
+        case kMenu1:
+
+            break;
+        case kMenu2:
+
+            break;
+        case kMenu3:
+
+            break;
+        case kMenu4:
+
+            break;
+        case kMenu5:
+
+            break;
+        case kMenuExit:
+
+            break;
+        default:
+            printf("Invalid menu input.\n");
+            break;
+        }
+    }
+
+
     return kSuccess;
 }
 /**
@@ -101,7 +155,7 @@ HashTable* createHashTable() {
  * void: No return value.
  */
 void collectDataFromFile() {
- 
+
 }
 /**
  * FUNCTION: createTreeNode
@@ -115,21 +169,21 @@ void collectDataFromFile() {
  * TreeNode*: Pointer to newly created node.
  */
 TreeNode* createTreeNode(char* pDestination, int weight, float value) {
-//Allocate memory for new node to insert.
+    //Allocate memory for new node to insert.
     TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
-//Handle allocation failure
-	if (newNode == NULL) {
-		printf("Memory allocation failed\n");
-		return NULL;
-	}
-//Copy data to newly allocated node.
-	newNode->pDestination = (char*)malloc(strlen(pDestination) + 1);
+    //Handle allocation failure
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+    //Copy data to newly allocated node.
+    newNode->pDestination = (char*)malloc(strlen(pDestination) + 1);
     strcpy(newNode->pDestination, pDestination);
     newNode->weight = weight;
     newNode->value = value;
     newNode->left = NULL;
     newNode->right = NULL;
-//Return node.
+    //Return node.
     return newNode;
 }
 /**
@@ -143,15 +197,14 @@ TreeNode* createTreeNode(char* pDestination, int weight, float value) {
  * void: No return value.
  */
 void insertInTree(TreeNode** root, TreeNode* item) {
-//Handle empty root.
+    //Handle empty root.
     if (*root == NULL) {
         *root = item;
     }
-//Check if you should insert the node to the left
+    //Check if you should insert the node to the left
     if (item->weight < (*root)->weight) {
         insertInTree(&(*root)->left, item);
-    }
-    else if (item->weight > (*root)->weight) {
+    } else if (item->weight > (*root)->weight) {
         insertInTree(&(*root)->right, item);
     }
 }
@@ -166,16 +219,16 @@ void insertInTree(TreeNode** root, TreeNode* item) {
  * TreeNode*: Returns found node if found, else NULL.
  */
 TreeNode* searchInTree(TreeNode* root, int weight) {
-//Handle empty tree.
+    //Handle empty tree.
     if (root == NULL) {
         printf("Tree is Empty. Cannot Perform Search!");
         return NULL;
     }
-//Check if equal.
+    //Check if equal.
     if (root->weight == weight) {
         return root;
     }
-//Check if less than or greater than.
+    //Check if less than or greater than.
     if (weight < root->weight) {
         return searchInTree(root->left, weight);
     } else if (weight > root->weight) {
@@ -206,19 +259,19 @@ void printTree(TreeNode* root) {
  */
 void freeMemory(TreeNode* root, HashTable* hashTable) {
     //Free memory for tree node structure.
-	if(root->left != NULL){
+    if (root->left != NULL) {
         freeMemory(root->left, hashTable);
-    } else if (root->right != NULL){
+    } else if (root->right != NULL) {
         freeMemory(root->right, hashTable);
-    } else if (root->left == NULL && root->right == NULL){
+    } else if (root->left == NULL && root->right == NULL) {
         free(root);
     }
-	//Free memory for the hash table.
-	if (hashTable != NULL) {
-		//Free memory for each linked list in hash table.
-		for (int count = 0; count < kBuckets; count++) {
-			freeMemory(hashTable->table[count], NULL);
-		}
-		free(hashTable);
-	}
+    //Free memory for the hash table.
+    if (hashTable != NULL) {
+        //Free memory for each linked list in hash table.
+        for (int count = 0; count < kBuckets; count++) {
+            freeMemory(hashTable->table[count], NULL);
+        }
+        free(hashTable);
+    }
 }
