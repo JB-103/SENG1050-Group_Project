@@ -166,7 +166,21 @@ void insertInTree(TreeNode** root, TreeNode* item) {
  * TreeNode*: Returns found node if found, else NULL.
  */
 TreeNode* searchInTree(TreeNode* root, int weight) {
-    return NULL;
+//Handle empty tree.
+    if (root == NULL) {
+        printf("Tree is Empty. Cannot Perform Search!");
+        return NULL;
+    }
+//Check if equal.
+    if (root->weight == weight) {
+        return root;
+    }
+//Check if less than or greater than.
+    if (weight < root->weight) {
+        return searchInTree(root->left, weight);
+    } else if (weight > root->weight) {
+        return searchInTree(root->right, weight);
+    }
 }
 /**
  * FUNCTION: printTree
