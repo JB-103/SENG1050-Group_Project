@@ -180,6 +180,21 @@ void printTree(TreeNode* root) {
  * RETURNS:
  * void: No return value.
  */
-void freeMemory(TreeNode* root, HashTable* table) {
-
+void freeMemory(TreeNode* root, HashTable* hashTable) {
+    //Free memory for tree node structure.
+	if(root->left != NULL){
+        freeMemory(root->left, hashTable);
+    } else if (root->right != NULL){
+        freeMemory(root->right, hashTable);
+    } else if (root->left == NULL && root->right == NULL){
+        free(root);
+    }
+	//Free memory for the hash table.
+	if (hashTable != NULL) {
+		//Free memory for each linked list in hash table.
+		for (int count = 0; count < kBuckets; count++) {
+			freeMemory(hashTable->table[count], NULL);
+		}
+		free(hashTable);
+	}
 }
