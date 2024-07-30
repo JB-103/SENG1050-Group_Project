@@ -143,7 +143,17 @@ TreeNode* createTreeNode(char* pDestination, int weight, float value) {
  * void: No return value.
  */
 void insertInTree(TreeNode** root, TreeNode* item) {
-
+//Handle empty root.
+    if (*root == NULL) {
+        *root = item;
+    }
+//Check if you should insert the node to the left
+    if (item->weight < (*root)->weight) {
+        insertInTree(&(*root)->left, item);
+    }
+    else if (item->weight > (*root)->weight) {
+        insertInTree(&(*root)->right, item);
+    }
 }
 /**
  * FUNCTION: searchInTree
