@@ -60,8 +60,14 @@ void freeMemory(TreeNode*, HashTable*);
 
 int main(void) {
     char* userInput{};
-    int menuInput = -1;
-
+    int menuInput = -1, result = 1;
+    HashTable* hashTable = createHashTable();
+    //Parse file.
+    result = collectDataFromFile(hashTable);
+    if (result != kSuccess) {
+        return result;
+    }
+    //Prompt user.
     while (true) {
         printf("Menu:\n");
         printf("1. Display all the parcels details for a country.\n");
@@ -89,12 +95,14 @@ int main(void) {
             break;
         case kMenu5:
 
-            break;
+            break; 
         case kMenuExit:
-
             break;
         default:
-            printf("Invalid menu input.\n");
+            printf("Invalid menu input. Please enter 1-6.\n");
+            break;
+        }
+        if (menuInput = kMenuExit) {
             break;
         }
     }
