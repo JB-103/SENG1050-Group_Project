@@ -15,7 +15,7 @@
 
 #pragma region Constants
 //Constants.
-#define kMaxNames 5000
+#define kMaxParcels 5000
 #define kMaxLength 21
 #define kBuckets 127
 #define kMinWeight 100
@@ -50,7 +50,7 @@ struct HashTable {
 #pragma region Prototypes
 unsigned long calculateHash(const char*);
 HashTable* createHashTable();
-void collectDataFromFile();
+int collectDataFromFile(HashTable*);
 TreeNode* createTreeNode(char*, int, float);
 void insertInTree(TreeNode**, TreeNode*);
 TreeNode* searchInTree(TreeNode*, int);
@@ -61,7 +61,6 @@ void freeMemory(TreeNode*, HashTable*);
 int main(void) {
     char* userInput{};
     int menuInput = -1;
-
 
     while (true) {
         printf("Menu:\n");
@@ -148,14 +147,53 @@ HashTable* createHashTable() {
 /**
  * FUNCTION: collectDataFromFile
  * DESCRIPTION:
- * Parses file & puts data into tree struct.
+ * Parses file & inserts data into tree struct.
  * PARAMETERS:
- * None.
+ * HashTable* hashTable: Pointer to hash table.
  * RETURNS:
- * void: No return value.
+ * int: returns 0 for success or non zero otherwise.
  */
-void collectDataFromFile() {
-
+int collectDataFromFile(HashTable* hashTable) {
+    //Open file for reading & handle open error.
+    int weight;
+    float value;
+    char destination[kMaxLength]{};
+    char tempLine[kMaxLength]{};
+    const char* pFilename = "couriers.txt";
+    FILE* pFile = fopen(pFilename, "r");
+    if (pFile == NULL) {
+        printf("Error: Could not open file: %s\n", pFilename);
+        return kFileOpenError;
+    }
+    //Iterate through file untill end of file or 5000 parcels.
+    for (int counter = 1; counter < kMaxParcels && fgets(tempLine, kMaxLength, pFile) != NULL; counter++) {
+        tempLine[strcspn(tempLine, "\n")] = '\0';
+        //Handle empty lines.
+        if (tempLine[0] == '\0') {
+            continue;
+        }
+        //Parse line & add to tree structure.
+        if (sscanf(tempLine, "%s, %d, %f", destination, &weight, &value) != 3) {
+            printf("Error parsing line: %s\n", tempLine);
+            return kFileReadError;
+        }
+        insertInTree(&hashTable->table[calculateHash(destination)], createTreeNode(destination, weight, value));
+    }
+    //Handle read errors
+    if (ferror(pFile)) {
+        printf("Error: Encountered an error while reading file: %s\n", pFilename);
+        if (fclose(pFile) != 0) {
+            printf("Error: Could not close file: %s\n", pFilename);
+            return kFileCloseError;
+        }
+        return kFileReadError;
+    }
+    //Close file & handle closing error.
+    if (fclose(pFile) != 0) {
+        printf("Error: Could not close file: %s\n", pFilename);
+        return kFileCloseError;
+    }
+    return kSuccess;
 }
 /**
  * FUNCTION: createTreeNode
