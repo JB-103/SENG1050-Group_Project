@@ -54,7 +54,11 @@ int collectDataFromFile(HashTable*);
 TreeNode* createTreeNode(char*, int, float);
 void insertInTree(TreeNode**, TreeNode*);
 TreeNode* searchInTree(TreeNode*, int);
+int getCountry();
 void printTree(TreeNode*);
+void printTotal(TreeNode*);
+void printMinMaxValue(TreeNode*);
+void printMinMaxWeight(TreeNode*);
 void freeMemory(TreeNode*, HashTable*);
 #pragma endregion
 
@@ -69,6 +73,7 @@ int main(void) {
     }
     //Prompt user.
     while (true) {
+        //Print menu.
         printf("Menu:\n");
         printf("1. Display all the parcels details for a country.\n");
         printf("2. Display higher/lower weights of country & parcel.\n");
@@ -76,25 +81,25 @@ int main(void) {
         printf("4. Display cheapest & most expensive parcels.\n");
         printf("5. Display lightest & heaviest parcel.\n");
         printf("6. Exit.\n");
-
+        //Get input.
         fgets(userInput, kMaxLength, stdin);
         menuInput = atoi(userInput);
-
+        //Check input.
         switch (menuInput) {
         case kMenu1:
-
+            printTree(hashTable->table[getCountry()]);
             break;
         case kMenu2:
-
+            
             break;
         case kMenu3:
-
+            printTotal(hashTable->table[getCountry()]);
             break;
         case kMenu4:
-
+            printMinMaxValue(hashTable->table[getCountry()]);
             break;
         case kMenu5:
-
+            printMinMaxWeight(hashTable->table[getCountry()]);
             break; 
         case kMenuExit:
             break;
@@ -282,15 +287,63 @@ TreeNode* searchInTree(TreeNode* root, int weight) {
     }
 }
 /**
+ * FUNCTION: getCountry
+ * DESCRIPTION:
+ * Prompts user to enter & gets hashTable index of country.
+ * PARAMETERS:
+ * None: Prompts user.
+ * RETURNS:
+ * int: hashTable index of country.
+ */
+int getCountry() {
+    return 0;
+}
+/**
  * FUNCTION: printTree
  * DESCRIPTION:
- * Prints tree structure to console.
+ * Prints full country tree structure & data.
  * PARAMETERS:
- * TreeNode* root: Pointer to root of tree to print.
+ * TreeNode* root: Pointer to root of tree structure.
  * RETURNS:
  * Void: no return value.
  */
 void printTree(TreeNode* root) {
+
+}
+/**
+ * FUNCTION: printTotal
+ * DESCRIPTION:
+ * Prints total weight & value of country tree structure.
+ * PARAMETERS:
+ * TreeNode* root: Pointer to root of tree structure.
+ * RETURNS:
+ * Void: no return value.
+ */
+void printTotal(TreeNode* root) {
+
+}
+/**
+ * FUNCTION: printMinMaxValue
+ * DESCRIPTION:
+ * Prints least & most expensive parcel in tree structure.
+ * PARAMETERS:
+ * TreeNode* root: Pointer to root of tree structure.
+ * RETURNS:
+ * Void: no return value.
+ */
+void printMinMaxValue(TreeNode* root) {
+
+}
+/**
+ * FUNCTION: printMinMaxWeight
+ * DESCRIPTION:
+ * Prints lightest & heaviest parcel in tree structure.
+ * PARAMETERS:
+ * TreeNode* root: Pointer to root of tree structure.
+ * RETURNS:
+ * Void: no return value.
+ */
+void printMinMaxWeight(TreeNode* root) {
 
 }
 /**
