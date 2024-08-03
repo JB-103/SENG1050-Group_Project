@@ -11,17 +11,19 @@
 #include <string.h>
 #include <malloc.h>
 #include <stdlib.h>
+#include <math.h>
 #pragma warning (disable: 4996)
 
 #pragma region Constants
 //Constants.
 #define kMaxParcels 5000
-#define kMaxLength 21
+#define kMaxDestLength 21
+#define kMaxLineLength kMaxDestLength+16 //5 weight, 7 value, 2 Comma/Spaces.
 #define kBuckets 127
 #define kMinWeight 100
 #define kMaxWeight 50000
-#define kMinValue 10
-#define kMaxValue 2000
+#define kMinValue 10.00
+#define kMaxValue 2000.00
 //Menu Items.
 #define kMenu1 1
 #define kMenu2 2
@@ -34,6 +36,7 @@
 #define kFileOpenError -1
 #define kFileReadError -2
 #define kFileCloseError -3
+#define kMemoryError -4
 #pragma endregion
 
 struct TreeNode {
@@ -56,7 +59,7 @@ void insertInTree(TreeNode**, TreeNode*);
 TreeNode* searchInTree(TreeNode*, int);
 int getCountry();
 void printTree(TreeNode*);
-void printTotal(TreeNode*);
+void getTotal(TreeNode*, int*, float*);
 void printMinMaxValue(TreeNode*);
 void printMinMaxWeight(TreeNode*);
 void freeMemory(TreeNode*, HashTable*);
@@ -82,7 +85,7 @@ int main(void) {
         printf("5. Display lightest & heaviest parcel.\n");
         printf("6. Exit.\n");
         //Get input.
-        fgets(userInput, kMaxLength, stdin);
+        fgets(userInput, kMaxDestLength, stdin);
         menuInput = atoi(userInput);
         //Check input.
         switch (menuInput) {
@@ -145,16 +148,17 @@ unsigned long calculateHash(const char* str) {
  * Node*: Pointer to newly created hash table (array of pointers).
  */
 HashTable* createHashTable() {
+    //Allocate memory for & validate allocation for hashtable.
     HashTable* hashTable = (HashTable*)malloc(sizeof(HashTable));
     if (hashTable == NULL) {
         printf("Memory allocation failed\n");
         return NULL;
     }
-
+    //Initialize all buckets to NULL.
     for (int counter = 0; counter < kBuckets; counter++) {
         hashTable->table[counter] = NULL;
     }
-
+    //Return created & initialized hashtable
     return hashTable;
 }
 /**
@@ -167,19 +171,19 @@ HashTable* createHashTable() {
  * int: returns 0 for success or non zero otherwise.
  */
 int collectDataFromFile(HashTable* hashTable) {
-    //Open file for reading & handle open error.
     int weight;
     float value;
-    char destination[kMaxLength]{};
-    char tempLine[kMaxLength]{};
+    char destination[kMaxDestLength]{};
+    char tempLine[kMaxLineLength]{};
     const char* pFilename = "couriers.txt";
+    //Open file for reading & handle open error.
     FILE* pFile = fopen(pFilename, "r");
     if (pFile == NULL) {
         printf("Error: Could not open file: %s\n", pFilename);
         return kFileOpenError;
     }
     //Iterate through file untill end of file or 5000 parcels.
-    for (int counter = 1; counter < kMaxParcels && fgets(tempLine, kMaxLength, pFile) != NULL; counter++) {
+    for (int counter = 1; counter < kMaxParcels && fgets(tempLine, kMaxLineLength, pFile) != NULL; counter++) {
         tempLine[strcspn(tempLine, "\n")] = '\0';
         //Handle empty lines.
         if (tempLine[0] == '\0') {
@@ -192,7 +196,7 @@ int collectDataFromFile(HashTable* hashTable) {
         }
         insertInTree(&hashTable->table[calculateHash(destination)], createTreeNode(destination, weight, value));
     }
-    //Handle read errors
+    //Handle read errors.
     if (ferror(pFile)) {
         printf("Error: Encountered an error while reading file: %s\n", pFilename);
         if (fclose(pFile) != 0) {
@@ -243,7 +247,7 @@ TreeNode* createTreeNode(char* pDestination, int weight, float value) {
  * Inserts item into tree structure.
  * PARAMETERS:
  * TreeNode** root: Double pointer to root node of tree.
- * TreeNode*: Pointer to item to be inserted.
+ * TreeNode* item: Pointer to item to be inserted.
  * RETURNS:
  * void: No return value.
  */
@@ -311,15 +315,17 @@ void printTree(TreeNode* root) {
 
 }
 /**
- * FUNCTION: printTotal
+ * FUNCTION: getTotal
  * DESCRIPTION:
- * Prints total weight & value of country tree structure.
+ * Calculates total weight & value of country tree structure.
  * PARAMETERS:
  * TreeNode* root: Pointer to root of tree structure.
+ * int* totalWeight: Pointer to keep track of total weight.
+ * float* totalValue: Pointer to keep track of total value.
  * RETURNS:
  * Void: no return value.
  */
-void printTotal(TreeNode* root) {
+void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
 
 }
 /**
@@ -367,7 +373,7 @@ void freeMemory(TreeNode* root, HashTable* hashTable) {
     }
     //Free memory for the hash table.
     if (hashTable != NULL) {
-        //Free memory for each linked list in hash table.
+        //Free memory for each tree in hash table.
         for (int count = 0; count < kBuckets; count++) {
             freeMemory(hashTable->table[count], NULL);
         }
