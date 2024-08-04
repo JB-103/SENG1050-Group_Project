@@ -67,13 +67,10 @@ void freeMemory(TreeNode*, HashTable*);
 
 int main(void) {
     char* userInput{};
-    int menuInput = -1, result = 1;
     HashTable* hashTable = createHashTable();
     //Parse file.
-    result = collectDataFromFile(hashTable);
-    if (result != kSuccess) {
-        return result;
-    }
+    int result = collectDataFromFile(hashTable);
+    if (result != kSuccess) return result;
     //Prompt user.
     while (true) {
         //Print menu.
@@ -86,17 +83,24 @@ int main(void) {
         printf("6. Exit.\n");
         //Get input.
         fgets(userInput, kMaxDestLength, stdin);
-        menuInput = atoi(userInput);
-        //Check input.
+        int menuInput = atoi(userInput);
+        //Check input & call functions accordingly.
         switch (menuInput) {
         case kMenu1:
             printTree(hashTable->table[getCountry()]);
             break;
         case kMenu2:
-            
+            int index = getCountry();
+            printf("Enter weight: ");
+            fgets(userInput, kMaxDestLength, stdin);
+            TreeNode* foundNode = searchInTree(hashTable->table[index], atoi(userInput));
+            printTree(foundNode);
             break;
         case kMenu3:
-            printTotal(hashTable->table[getCountry()]);
+            int totalWeight = 0;
+            float totalValue = 0;
+            getTotal(hashTable->table[getCountry()], &totalWeight, &totalValue);
+            printf("Total Weight: %i\n Total Valuation: %d\n", totalWeight, totalValue);
             break;
         case kMenu4:
             printMinMaxValue(hashTable->table[getCountry()]);
@@ -110,12 +114,8 @@ int main(void) {
             printf("Invalid menu input. Please enter 1-6.\n");
             break;
         }
-        if (menuInput = kMenuExit) {
-            break;
-        }
+        if (menuInput == kMenuExit) break;
     }
-
-
     return kSuccess;
 }
 /**
@@ -155,9 +155,7 @@ HashTable* createHashTable() {
         return NULL;
     }
     //Initialize all buckets to NULL.
-    for (int counter = 0; counter < kBuckets; counter++) {
-        hashTable->table[counter] = NULL;
-    }
+    for (int counter = 0; counter < kBuckets; counter++) hashTable->table[counter] = NULL;
     //Return created & initialized hashtable
     return hashTable;
 }
@@ -186,14 +184,13 @@ int collectDataFromFile(HashTable* hashTable) {
     for (int counter = 1; counter < kMaxParcels && fgets(tempLine, kMaxLineLength, pFile) != NULL; counter++) {
         tempLine[strcspn(tempLine, "\n")] = '\0';
         //Handle empty lines.
-        if (tempLine[0] == '\0') {
-            continue;
-        }
-        //Parse line & add to tree structure.
-        if (sscanf(tempLine, "%s, %d, %f", destination, &weight, &value) != 3) {
+        if (tempLine[0] == '\0') continue;
+        //Parse line into variables.
+        if (sscanf(tempLine, "%[^,], %i, %f", destination, &weight, &value) != 3) {
             printf("Error parsing line: %s\n", tempLine);
             return kFileReadError;
         }
+        //Add to Tree Structure
         insertInTree(&hashTable->table[calculateHash(destination)], createTreeNode(destination, weight, value));
     }
     //Handle read errors.
@@ -253,9 +250,7 @@ TreeNode* createTreeNode(char* pDestination, int weight, float value) {
  */
 void insertInTree(TreeNode** root, TreeNode* item) {
     //Handle empty root.
-    if (*root == NULL) {
-        *root = item;
-    }
+    if (*root == NULL) *root = item;
     //Check if you should insert the node to the left
     if (item->weight < (*root)->weight) {
         insertInTree(&(*root)->left, item);
@@ -280,15 +275,10 @@ TreeNode* searchInTree(TreeNode* root, int weight) {
         return NULL;
     }
     //Check if equal.
-    if (root->weight == weight) {
-        return root;
-    }
+    if (root->weight == weight) return root;
     //Check if less than or greater than.
-    if (weight < root->weight) {
-        return searchInTree(root->left, weight);
-    } else if (weight > root->weight) {
-        return searchInTree(root->right, weight);
-    }
+    if (weight < root->weight) return searchInTree(root->left, weight);
+    if (weight > root->weight) return searchInTree(root->right, weight);
 }
 /**
  * FUNCTION: getCountry
@@ -364,19 +354,13 @@ void printMinMaxWeight(TreeNode* root) {
  */
 void freeMemory(TreeNode* root, HashTable* hashTable) {
     //Free memory for tree node structure.
-    if (root->left != NULL) {
-        freeMemory(root->left, hashTable);
-    } else if (root->right != NULL) {
-        freeMemory(root->right, hashTable);
-    } else if (root->left == NULL && root->right == NULL) {
-        free(root);
-    }
+    if (root->left != NULL) freeMemory(root->left, hashTable);
+    if (root->right != NULL) freeMemory(root->right, hashTable);
+    if (root->left == NULL && root->right == NULL) free(root);
     //Free memory for the hash table.
     if (hashTable != NULL) {
         //Free memory for each tree in hash table.
-        for (int count = 0; count < kBuckets; count++) {
-            freeMemory(hashTable->table[count], NULL);
-        }
+        for (int count = 0; count < kBuckets; count++) freeMemory(hashTable->table[count], NULL);
         free(hashTable);
     }
 }
