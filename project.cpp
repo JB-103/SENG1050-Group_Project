@@ -115,12 +115,12 @@ int main(void) {
             totalWeight = 0;
             totalValue = 0;
             getTotal(hashTable->table[getCountry()], &totalWeight, &totalValue);
-            printf("Total Weight: %i\n Total Valuation: %d\n", totalWeight, totalValue);
+            printf("Total Weight: %i\nTotal Valuation: %.2f\n", totalWeight, totalValue);
             break;
         case kMenu4:
-            minValue = 0, maxValue = 0;
+            minValue = kMaxValue, maxValue = kMinValue;
             getMinMaxValue(hashTable->table[getCountry()], &minValue, &maxValue);
-            printf("Minimum Valuation: %d\n Maximum Valuation: %d\n", minValue, maxValue);
+            printf("Minimum Valuation: %.2f\nMaximum Valuation: %.2f\n", minValue, maxValue);
             break;
         case kMenu5:
             printMinMaxWeight(hashTable->table[getCountry()]);
@@ -129,10 +129,12 @@ int main(void) {
             active = false;
             break;
         default:
-            printf("Invalid menu input. Please enter 1-6.\n");
+            printf("\nInvalid menu input. Please enter 1-6.\n");
             break;
         }
     }
+    //Free memory and return success.
+    freeMemory(NULL, hashTable);
     return kSuccess;
 }
 /**
@@ -384,7 +386,7 @@ void insertInTree(TreeNode** root, TreeNode* item) {
 TreeNode* searchInTree(TreeNode* root, int weight) {
     //Handle empty tree.
     if (root == NULL) {
-        printf("Tree is Empty. Cannot Perform Search!");
+        printf("Weight not found.\n");
         return NULL;
     }
     //Check if equal.
@@ -471,7 +473,7 @@ void getMinMaxValue(TreeNode* root, float* minValue, float* maxValue) {
     if (root == NULL) return;
     //Compare values & find min & max.
     if (root->value < *minValue) *minValue = root->value;
-    if (root->value > *maxValue) *minValue = root->value;
+    if (root->value > *maxValue) *maxValue = root->value;
     //Traverse left subtree.
     getMinMaxValue(root->left, minValue, maxValue);
     //Traverse right subtree.
@@ -509,14 +511,16 @@ void printMinMaxWeight(TreeNode* root) {
  * void: No return value.
  */
 void freeMemory(TreeNode* root, HashTable* hashTable) {
-    //Free memory for tree node structure.
-    if (root->left != NULL) freeMemory(root->left, hashTable);
-    if (root->right != NULL) freeMemory(root->right, hashTable);
-    if (root->left == NULL && root->right == NULL) free(root);
     //Free memory for the hash table.
     if (hashTable != NULL) {
         //Free memory for each tree in hash table.
         for (int count = 0; count < kBuckets; count++) freeMemory(hashTable->table[count], NULL);
         free(hashTable);
+    }
+    //Free memory for tree node structure.
+    if (root != NULL) {
+        if (root->left != NULL) freeMemory(root->left, NULL);
+        if (root->right != NULL) freeMemory(root->right, NULL);
+        if (root->left == NULL && root->right == NULL) free(root);
     }
 }
