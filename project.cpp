@@ -291,7 +291,15 @@ TreeNode* searchInTree(TreeNode* root, int weight) {
  * int: hashTable index of country.
  */
 int getCountry() {
-    return 0;
+    char* userInput{};
+    //Prompt user & get input.
+    do {
+        printf("Enter country: ");
+        fgets(userInput, kMaxDestLength, stdin);
+        if (userInput[0] == '\n') printf("Invalid country.\n");
+    } while (userInput[0] == '\n');
+    //Return hashvalue of country input.
+    return calculateHash(userInput);
 }
 /**
  * FUNCTION: printTree
@@ -303,7 +311,14 @@ int getCountry() {
  * Void: no return value.
  */
 void printTree(TreeNode* root) {
-
+    //Handle empty tree.
+    if (root == NULL) return;
+    //Print weight & value for parcel.
+    printf("%d, %.2f\t", root->weight, root->value);
+    //Traverse left subtree.
+    printTree(root->left);
+    //Traverse right subtree.
+    printTree(root->right);
 }
 /**
  * FUNCTION: getTotal
@@ -329,13 +344,12 @@ void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
  * Void: no return value.
  */
 void printMinMaxValue(TreeNode* root) {
-    //Handle empty tree.
-    if (root == NULL) return;
-    //Print weight & value for parcel.
+	if (root == NULL) return;
+	//Print weight & value for parcel.
 	printf("%d, %.2f\t", root->weight, root->value);
-    //Traverse left subtree.
+	//Traverse left subtree.
 	printMinMaxValue(root->left);
-    //Traverse right subtree.
+	//Traverse right subtree.
 	printMinMaxValue(root->right);
 }
 /**
