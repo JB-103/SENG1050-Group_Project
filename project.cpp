@@ -88,13 +88,14 @@ int main(void) {
     //Prompt user.
     while (active) {
         //Print menu.
-        printf("Menu:\n");
+        printf("\nMenu:\n");
         printf("1. Display all the parcels details for a country.\n");
         printf("2. Display higher/lower weights of country & parcel.\n");
         printf("3. Display total parcel load & valuation for country.\n");
         printf("4. Display cheapest & most expensive parcels.\n");
         printf("5. Display lightest & heaviest parcel.\n");
         printf("6. Exit.\n");
+        printf("Enter Number: ");
         //Get input.
         fgets(userInput, kMaxDestLength, stdin);
         int menuInput = atoi(userInput);
@@ -307,15 +308,18 @@ void linkListIntoBST(ListNode** head, TreeNode** root, int n) {
     //Handle empty list.
     if (*head == NULL || n == 0) return;
     //Calculate & find middle node.
-    int middle = (n + 2 - 1) / 2;
+    int middle = n / 2;
     ListNode* currentNode = *head;
-    for (int count = 0; count < middle && n != 1 && currentNode->next != NULL; count++) currentNode = currentNode->next;
+    for (int count = 0; count < middle && currentNode->next != NULL; count++) currentNode = currentNode->next;
     //Set middle node as root & return if on last node.
     *root = currentNode->tNode;
     if (n == 1) return;
+    // Create a new list head for the right subtree & disconnect middle of list.
+    ListNode* rightHead = currentNode->next;
+    currentNode->next = NULL;
     //Iterate through left & right subtrees untill linked list is empty.
-    linkListIntoBST(head, &currentNode->tNode->left, middle);
-    linkListIntoBST(&currentNode->next, &currentNode->tNode->right, middle);
+    linkListIntoBST(head, &(*root)->left, middle);
+    linkListIntoBST(&rightHead, &(*root)->right, (n - middle - 1));
 }
 /**
  * FUNCTION: createTreeNode
@@ -406,6 +410,7 @@ int getCountry() {
         fgets(userInput, kMaxDestLength, stdin);
         if (userInput[0] == '\n') printf("Invalid country.\n");
     } while (userInput[0] == '\n');
+    userInput[strcspn(userInput, "\n")] = '\0';
     //Return hashvalue of country input.
     return calculateHash(userInput);
 }
