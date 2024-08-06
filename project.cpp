@@ -68,11 +68,12 @@ void freeMemory(TreeNode*, HashTable*);
 int main(void) {
     char* userInput{};
     HashTable* hashTable = createHashTable();
+    bool active = true;
     //Parse file.
     int result = collectDataFromFile(hashTable);
     if (result != kSuccess) return result;
     //Prompt user.
-    while (true) {
+    while (active) {
         //Print menu.
         printf("Menu:\n");
         printf("1. Display all the parcels details for a country.\n");
@@ -109,12 +110,12 @@ int main(void) {
             printMinMaxWeight(hashTable->table[getCountry()]);
             break; 
         case kMenuExit:
+            active = false;
             break;
         default:
             printf("Invalid menu input. Please enter 1-6.\n");
             break;
         }
-        if (menuInput == kMenuExit) break;
     }
     return kSuccess;
 }
@@ -290,7 +291,15 @@ TreeNode* searchInTree(TreeNode* root, int weight) {
  * int: hashTable index of country.
  */
 int getCountry() {
-    return 0;
+    char* userInput{};
+    //Prompt user & get input.
+    do {
+        printf("Enter country: ");
+        fgets(userInput, kMaxDestLength, stdin);
+        if (userInput[0] == '\n') printf("Invalid country.\n");
+    } while (userInput[0] == '\n');
+    //Return hashvalue of country input.
+    return calculateHash(userInput);
 }
 /**
  * FUNCTION: printTree
@@ -328,7 +337,14 @@ void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
  * Void: no return value.
  */
 void printMinMaxValue(TreeNode* root) {
-
+    //Handle empty tree.
+    if (root == NULL) return;
+    //Print weight & value for parcel.
+	printf("%d, %.2f\t", root->weight, root->value);
+    //Traverse left subtree.
+	printMinMaxValue(root->left);
+    //Traverse right subtree.
+	printMinMaxValue(root->right);
 }
 /**
  * FUNCTION: printMinMaxWeight
