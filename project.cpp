@@ -76,7 +76,7 @@ void freeMemory(TreeNode*, HashTable*);
 #pragma endregion
 
 int main(void) {
-    char* userInput{};
+    char userInput[kMaxDestLength] = "";
     HashTable* hashTable = createHashTable();
     TreeNode* foundNode = NULL;
     bool active = true;
@@ -193,7 +193,7 @@ int collectDataFromFile(HashTable* hashTable) {
     }
     for (int counter = 0; counter < kBuckets; counter++) listHashTable->table[counter] = NULL;
     //Variables.
-    int counts[kCountries]{ 0 }, weight = -1;
+    int counts[kBuckets]{ 0 }, weight = -1;
     float value = -1;
     char destination[kMaxDestLength]{}, tempLine[kMaxLineLength]{};
     //Open file for reading & handle open error.
@@ -287,10 +287,9 @@ int collectDataFromFile(HashTable* hashTable) {
                 free(temp);
             }
         }
-        free(hashTable);
+        free(listHashTable);
     }
     //Return if successful.
-    free(counts);
     return kSuccess;
 }
 /**
@@ -310,7 +309,7 @@ void linkListIntoBST(ListNode** head, TreeNode** root, int n) {
     //Calculate & find middle node.
     int middle = (n + 2 - 1) / 2;
     ListNode* currentNode = *head;
-    for (int count = 0; count < middle; count++) currentNode = currentNode->next;
+    for (int count = 0; count < middle && n != 1 && currentNode->next != NULL; count++) currentNode = currentNode->next;
     //Set middle node as root & return if on last node.
     *root = currentNode->tNode;
     if (n == 1) return;
@@ -400,7 +399,7 @@ TreeNode* searchInTree(TreeNode* root, int weight) {
  * int: hashTable index of country.
  */
 int getCountry() {
-    char* userInput{};
+    char userInput[kMaxDestLength] = "";
     //Prompt user & get input.
     do {
         printf("Enter country: ");
