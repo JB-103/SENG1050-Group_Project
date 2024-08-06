@@ -332,7 +332,15 @@ void printTree(TreeNode* root) {
  * Void: no return value.
  */
 void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
-
+    //Handle empty tree.
+    if (root == NULL) return;
+    //Add weight & value.
+    *totalWeight += root->weight;
+    *totalValue += root->value;
+    //Traverse left subtree.
+    getTotal(root->left, totalWeight, totalValue);
+    //Traverse right subtree.
+    getTotal(root->right, totalWeight, totalValue);
 }
 /**
  * FUNCTION: printMinMaxValue
@@ -345,6 +353,7 @@ void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
  */
 void printMinMaxValue(TreeNode* root) {
 
+}
 /**
  * FUNCTION: printMinMaxWeight
  * DESCRIPTION:
