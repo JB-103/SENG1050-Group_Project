@@ -60,7 +60,7 @@ TreeNode* searchInTree(TreeNode*, int);
 int getCountry();
 void printTree(TreeNode*);
 void getTotal(TreeNode*, int*, float*);
-void printMinMaxValue(TreeNode*);
+void getMinMaxValue(TreeNode*, float*, float*);
 void printMinMaxWeight(TreeNode*);
 void freeMemory(TreeNode*, HashTable*);
 #pragma endregion
@@ -104,11 +104,13 @@ int main(void) {
             printf("Total Weight: %i\n Total Valuation: %d\n", totalWeight, totalValue);
             break;
         case kMenu4:
-            printMinMaxValue(hashTable->table[getCountry()]);
+            float minValue = 0, maxValue = 0;
+            getMinMaxValue(hashTable->table[getCountry()], &minValue, &maxValue);
+            printf("Minimum Valuation: %d\n Maximum Valuation: %d\n", minValue, maxValue);
             break;
         case kMenu5:
             printMinMaxWeight(hashTable->table[getCountry()]);
-            break; 
+            break;
         case kMenuExit:
             active = false;
             break;
@@ -255,7 +257,8 @@ void insertInTree(TreeNode** root, TreeNode* item) {
     //Check if you should insert the node to the left
     if (item->weight < (*root)->weight) {
         insertInTree(&(*root)->left, item);
-    } else if (item->weight > (*root)->weight) {
+    }
+    else if (item->weight > (*root)->weight) {
         insertInTree(&(*root)->right, item);
     }
 }
@@ -351,8 +354,16 @@ void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
  * RETURNS:
  * Void: no return value.
  */
-void printMinMaxValue(TreeNode* root) {
-
+void printMinMaxValue(TreeNode* root, float* minValue, float* maxValue) {
+    //Handle empty tree.
+    if (root == NULL) return;
+    //Compare values & find min & max.
+    if (root->value < *minValue) *minValue = root->value;
+    if (root->value > *maxValue) *minValue = root->value;
+    //Traverse left subtree.
+    printMinMaxValue(root->left, minValue, maxValue);
+    //Traverse right subtree.
+    printMinMaxValue(root->right, minValue, maxValue);
 }
 /**
  * FUNCTION: printMinMaxWeight
