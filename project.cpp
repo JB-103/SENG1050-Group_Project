@@ -291,15 +291,7 @@ TreeNode* searchInTree(TreeNode* root, int weight) {
  * int: hashTable index of country.
  */
 int getCountry() {
-    char* userInput{};
-    //Prompt user & get input.
-    do {
-        printf("Enter country: ");
-        fgets(userInput, kMaxDestLength, stdin);
-        if (userInput[0] == '\n') printf("Invalid country.\n");
-    } while (userInput[0] == '\n');
-    //Return hashvalue of country input.
-    return calculateHash(userInput);
+    return 0;
 }
 /**
  * FUNCTION: printTree
