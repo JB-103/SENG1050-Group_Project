@@ -328,7 +328,13 @@ void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
  * Void: no return value.
  */
 void printMinMaxValue(TreeNode* root) {
+    if (root == NULL) return;
 
+    printf("%d, %.2f\t", root->weight, root->value);
+
+    printMinMaxValue(root->left);
+
+    printMinMaxValue(root->right);
 }
 /**
  * FUNCTION: printMinMaxWeight
