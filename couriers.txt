@@ -1,78 +1,78 @@
-Azerbaijan, 24950, 152.31
-Italy, 24950, 63.20
-Ukraine, 24950, 323.54
-Germany, 24950, 199.53
-Australia, 24950, 133.13
-Vanuatu, 24950, 162.61
-Bulgaria, 24950, 286.82
-Mongolia, 24950, 329.56
-Armenia, 24950, 219.09
-Yemen, 24950, 146.32
-Bahamas, 24950, 172.26
-Trinidad & Tobago, 24950, 135.13
-Spain, 24950, 259.31
-Russian Federation, 24950, 262.95
-Djibouti, 24950, 337.44
-Ethiopia, 24950, 311.95
-Eswatini, 24950, 233.95
-Slovakia, 24950, 104.28
-Aruba, 24950, 297.11
-Nepal, 24950, 72.76
-India, 24950, 222.80
-Gambia, 24950, 215.20
-Israel, 24950, 160.19
-Kosovo, 24950, 250.01
-Burkina Faso, 24950, 312.91
-Barbados, 24950, 281.53
-Algeria, 24950, 208.81
 Afghanistan, 24950, 175.97
 Albania, 24950, 169.09
-San Marino, 24950, 295.90
-Costa Rica, 24950, 63.39
-Marshall Islands, 24950, 64.82
-Iceland, 24950, 120.49
-Kuwait, 24950, 124.13
-Japan, 24950, 24.18
-Canada, 24950, 141.65
-Oman, 24950, 210.09
-Liberia, 24950, 267.86
-Vietnam, 24950, 135.25
-Taiwan, 24950, 51.14
-Bhutan, 24950, 43.52
-Indonesia, 24950, 229.07
+Algeria, 24950, 208.81
+Angola, 24950, 307.14
 Antigua and Barbuda, 24950, 216.57
-Colombia, 24950, 276.49
-France, 24950, 143.84
-Iraq, 24950, 221.13
-Uruguay, 24950, 14.73
-Benin, 24950, 253.99
-Cuba, 24950, 112.05
-Myanmar, 24950, 10.82
-South Africa, 24950, 96.48
+Argentina, 24950, 213.99
+Armenia, 24950, 219.09
+Aruba, 24950, 297.11
+Australia, 24950, 133.13
+Austria, 24950, 272.02
+Azerbaijan, 24950, 152.31
+Bahamas, 24950, 172.26
 Bahrain, 24950, 156.79
+Bangladesh, 24950, 29.62
+Barbados, 24950, 281.53
+Belarus, 24950, 27.70
+Benin, 24950, 253.99
+Bhutan, 24950, 43.52
 Brazil, 24950, 198.18
+Bulgaria, 24950, 286.82
+Burkina, 24950, 312.91
+Canada, 24950, 141.65
+Chile, 24950, 43.49
+China, 24950, 176.97
+Colombia, 24950, 276.49
+Comoros, 24950, 265.34
 Congo, 24950, 308.05
+Costa Rica, 24950, 63.39
+Cuba, 24950, 112.05
+Denmark, 24950, 65.24
+Djibouti, 24950, 337.44
+Dominica, 24950, 316.47
+Eswatini, 24950, 233.95
+Ethiopia, 24950, 311.95
+France, 24950, 143.84
+Gambia, 24950, 215.20
+Georgia, 24950, 336.65
+Germany, 24950, 199.53
 Guatemala, 24950, 14.12
 Guinea-Bissau, 24950, 50.10
-Austria, 24950, 272.02
-Slovenia, 24950, 160.21
-Comoros, 24950, 265.34
-Serbia, 24950, 114.61
-China, 24950, 176.97
-Belarus, 24950, 27.70
-Dominica, 24950, 316.47
+Iceland, 24950, 120.49
+India, 24950, 222.80
+Indonesia, 24950, 229.07
+Iraq, 24950, 221.13
+Israel, 24950, 160.19
+Italy, 24950, 63.20
+Japan, 24950, 24.18
+Kosovo, 24950, 250.01
+Kuwait, 24950, 124.13
+Liberia, 24950, 267.86
 Madagascar, 24950, 227.95
-Chile, 24950, 43.49
-Denmark, 24950, 65.24
-Tajikistan, 24950, 195.02
-Angola, 24950, 307.14
-Nicaragua, 24950, 285.75
-Georgia, 24950, 336.65
-Argentina, 24950, 213.99
-Bangladesh, 24950, 29.62
+Marshall Islands, 24950, 64.82
 Moldova, 24950, 185.90
+Mongolia, 24950, 329.56
+Myanmar, 24950, 10.82
+Nepal, 24950, 72.76
+Nicaragua, 24950, 285.75
+Oman, 24950, 210.09
+Russian Federation, 24950, 262.95
+San Marino, 24950, 295.90
+Serbia, 24950, 114.61
+Slovakia, 24950, 104.28
+Slovenia, 24950, 160.21
+South Africa, 24950, 96.48
+Spain, 24950, 259.31
+Taiwan, 24950, 51.14
+Tajikistan, 24950, 195.02
+Trinidad & Tobago, 24950, 135.13
+Ukraine, 24950, 323.54
+Uruguay, 24950, 14.73
+Vanuatu, 24950, 162.61
+Vietnam, 24950, 135.25
+Yemen, 24950, 146.32
 Costa Rica, 9913, 318.67
-Burkina Faso, 5725, 336.51
+Burkina, 5725, 336.51
 Taiwan, 13553, 59.01
 Italy, 26899, 116.46
 Cuba, 32445, 262.01
@@ -81,7 +81,7 @@ Nepal, 9439, 106.95
 Belarus, 12094, 261.55
 Barbados, 12088, 274.95
 Austria, 1127, 12.73
-Burkina Faso, 14037, 121.16
+Burkina, 14037, 121.16
 Marshall Islands, 15163, 309.26
 Algeria, 780, 117.52
 Brazil, 14585, 222.30
@@ -109,7 +109,7 @@ Slovenia, 24037, 41.84
 India, 27013, 138.24
 Mongolia, 5706, 184.78
 Bangladesh, 26399, 255.03
-Burkina Faso, 22468, 73.70
+Burkina, 22468, 73.70
 Guatemala, 32433, 261.93
 Bahrain, 28512, 55.52
 Vanuatu, 9399, 315.96
@@ -126,7 +126,7 @@ Yemen, 29706, 320.17
 France, 31320, 168.58
 Australia, 6192, 40.63
 Georgia, 306, 328.13
-Burkina Faso, 20622, 36.31
+Burkina, 20622, 36.31
 Russian Federation, 17804, 247.43
 France, 27382, 270.97
 Moldova, 15213, 199.60
@@ -139,7 +139,7 @@ Guinea-Bissau, 15426, 183.12
 Indonesia, 20366, 208.03
 Chile, 20023, 332.25
 Congo, 9149, 205.88
-Burkina Faso, 16799, 171.31
+Burkina, 16799, 171.31
 Albania, 16111, 282.64
 Iraq, 2781, 310.84
 Trinidad & Tobago, 32061, 93.21
@@ -178,7 +178,7 @@ Ukraine, 1723, 278.84
 Russian Federation, 18431, 292.10
 Nicaragua, 22898, 183.67
 Colombia, 28636, 223.11
-Burkina Faso, 27610, 180.81
+Burkina, 27610, 180.81
 Vanuatu, 2015, 240.17
 India, 20758, 266.52
 Brazil, 31140, 192.45
@@ -208,7 +208,7 @@ Brazil, 14050, 334.73
 Uruguay, 4497, 40.79
 Ethiopia, 11011, 287.54
 Argentina, 17637, 140.60
-Burkina Faso, 5645, 258.70
+Burkina, 5645, 258.70
 Eswatini, 14850, 302.52
 Germany, 10100, 251.46
 Uruguay, 23911, 26.93
@@ -412,7 +412,7 @@ Vietnam, 17016, 205.29
 San Marino, 13236, 171.79
 Azerbaijan, 10418, 57.56
 Yemen, 11769, 45.29
-Burkina Faso, 14755, 297.39
+Burkina, 14755, 297.39
 Denmark, 32136, 214.32
 China, 23611, 159.85
 Nicaragua, 7430, 131.76
@@ -523,7 +523,7 @@ Bahamas, 14160, 44.24
 Congo, 9162, 219.85
 Germany, 1925, 190.03
 Bahrain, 13844, 194.34
-Burkina Faso, 24112, 290.59
+Burkina, 24112, 290.59
 Ethiopia, 18302, 63.80
 Yemen, 19716, 65.79
 Russian Federation, 12494, 112.88
@@ -556,7 +556,7 @@ Nepal, 9499, 19.19
 Oman, 13388, 80.75
 San Marino, 14764, 246.93
 Comoros, 25878, 165.89
-Burkina Faso, 23241, 34.62
+Burkina, 23241, 34.62
 Indonesia, 13566, 237.96
 Barbados, 10610, 282.01
 Trinidad & Tobago, 29706, 104.04
@@ -704,7 +704,7 @@ Spain, 28826, 269.26
 Madagascar, 18116, 119.83
 Austria, 27735, 165.50
 Georgia, 2193, 159.60
-Burkina Faso, 21405, 280.93
+Burkina, 21405, 280.93
 Canada, 11221, 68.22
 Iraq, 23018, 269.02
 Austria, 3692, 199.66
@@ -740,7 +740,7 @@ Bahrain, 22895, 112.72
 Afghanistan, 25111, 205.99
 Japan, 19175, 184.66
 Moldova, 17469, 225.19
-Burkina Faso, 12804, 328.81
+Burkina, 12804, 328.81
 Benin, 27587, 275.51
 Iceland, 2720, 50.26
 Madagascar, 23821, 229.69
@@ -828,7 +828,7 @@ Azerbaijan, 7144, 248.03
 Bahamas, 30263, 15.87
 Chile, 11747, 107.20
 Antigua and Barbuda, 9183, 25.31
-Burkina Faso, 8080, 146.42
+Burkina, 8080, 146.42
 Liberia, 18196, 270.37
 Bahamas, 30966, 301.45
 Liberia, 13265, 278.12
@@ -852,7 +852,7 @@ Japan, 6916, 274.64
 Afghanistan, 13863, 285.62
 Kuwait, 3345, 255.51
 Brazil, 32605, 151.12
-Burkina Faso, 1150, 113.08
+Burkina, 1150, 113.08
 Costa Rica, 4409, 237.81
 Russian Federation, 12991, 250.22
 Comoros, 15204, 202.57
@@ -890,7 +890,7 @@ Iraq, 29903, 25.23
 Azerbaijan, 8155, 208.80
 Dominica, 32675, 209.50
 Armenia, 15672, 157.44
-Burkina Faso, 8483, 60.91
+Burkina, 8483, 60.91
 Iceland, 16170, 33.22
 Tajikistan, 14520, 275.62
 Vanuatu, 31845, 176.72
@@ -905,7 +905,7 @@ Vietnam, 7988, 42.65
 Canada, 18060, 171.56
 Angola, 8695, 123.50
 Oman, 32483, 312.07
-Burkina Faso, 899, 201.22
+Burkina, 899, 201.22
 Azerbaijan, 11199, 126.49
 Kosovo, 7369, 76.80
 Madagascar, 17691, 226.01
@@ -948,7 +948,7 @@ Barbados, 19660, 127.55
 Kuwait, 25878, 306.35
 Uruguay, 17451, 102.90
 Iraq, 25413, 163.07
-Burkina Faso, 7025, 150.87
+Burkina, 7025, 150.87
 Slovakia, 21779, 96.85
 Bahamas, 18967, 123.82
 Canada, 8416, 263.44
@@ -991,7 +991,7 @@ Cuba, 12884, 89.08
 Uruguay, 5867, 167.35
 Ukraine, 799, 324.58
 Mongolia, 6394, 113.99
-Burkina Faso, 7587, 84.16
+Burkina, 7587, 84.16
 Australia, 23519, 122.30
 Eswatini, 6813, 32.32
 Uruguay, 8083, 243.96
@@ -1076,7 +1076,7 @@ Barbados, 3536, 109.59
 Bahrain, 1631, 182.22
 Kosovo, 29787, 216.87
 Georgia, 10111, 188.68
-Burkina Faso, 5554, 40.51
+Burkina, 5554, 40.51
 Aruba, 15042, 231.09
 Spain, 3300, 234.68
 Comoros, 12646, 187.23
@@ -1364,7 +1364,7 @@ Trinidad & Tobago, 8976, 325.72
 Yemen, 9063, 85.22
 Uruguay, 30458, 303.18
 Nicaragua, 27943, 62.41
-Burkina Faso, 9616, 213.91
+Burkina, 9616, 213.91
 Bahamas, 21089, 70.12
 Canada, 10412, 273.43
 Guinea-Bissau, 12337, 194.41
@@ -1443,7 +1443,7 @@ Canada, 22134, 121.86
 Nepal, 16852, 250.20
 Argentina, 11583, 269.49
 Albania, 20220, 129.58
-Burkina Faso, 6043, 93.08
+Burkina, 6043, 93.08
 Germany, 599, 72.41
 Slovenia, 10509, 178.47
 Oman, 17578, 73.42
@@ -1466,9 +1466,9 @@ Mongolia, 32059, 76.26
 Bahrain, 5344, 292.15
 Brazil, 471, 106.12
 Slovenia, 26092, 305.06
-Burkina Faso, 4125, 22.73
+Burkina, 4125, 22.73
 Kuwait, 26918, 22.27
-Burkina Faso, 17545, 17.33
+Burkina, 17545, 17.33
 Marshall Islands, 2586, 264.32
 Bhutan, 17536, 260.96
 Italy, 32756, 134.43
@@ -1542,11 +1542,11 @@ Bahamas, 16423, 99.83
 Madagascar, 31549, 106.64
 Belarus, 17173, 153.85
 Austria, 7653, 150.14
-Burkina Faso, 32377, 257.43
+Burkina, 32377, 257.43
 Madagascar, 27395, 162.31
 Slovenia, 5976, 139.91
 Spain, 29464, 159.58
-Burkina Faso, 15916, 89.16
+Burkina, 15916, 89.16
 Myanmar, 29799, 208.43
 Nicaragua, 6665, 276.09
 Iceland, 7944, 187.92
@@ -1722,7 +1722,7 @@ Australia, 17926, 179.42
 Spain, 14498, 92.13
 Argentina, 8509, 169.71
 Gambia, 15446, 74.66
-Burkina Faso, 31743, 238.22
+Burkina, 31743, 238.22
 Kosovo, 18294, 140.75
 Kosovo, 31730, 216.68
 Angola, 17449, 328.43
@@ -1740,7 +1740,7 @@ Angola, 28477, 28.96
 Benin, 31180, 167.79
 Costa Rica, 276, 101.52
 San Marino, 8825, 278.65
-Burkina Faso, 25397, 45.73
+Burkina, 25397, 45.73
 Marshall Islands, 6742, 45.05
 Azerbaijan, 15760, 84.28
 Trinidad & Tobago, 1082, 230.92
@@ -1758,7 +1758,7 @@ Austria, 32170, 108.10
 Australia, 3260, 260.91
 Djibouti, 17189, 315.12
 Myanmar, 17672, 78.28
-Burkina Faso, 9933, 269.13
+Burkina, 9933, 269.13
 Belarus, 24987, 126.22
 Afghanistan, 4084, 286.24
 Vietnam, 15220, 175.32
@@ -1772,7 +1772,7 @@ Georgia, 21627, 153.07
 Aruba, 4001, 330.13
 Argentina, 7967, 292.09
 Myanmar, 17952, 195.69
-Burkina Faso, 5135, 242.36
+Burkina, 5135, 242.36
 Vanuatu, 24827, 47.07
 Serbia, 31230, 152.53
 Kuwait, 4481, 186.56
@@ -1931,7 +1931,7 @@ Albania, 13458, 326.71
 Belarus, 23954, 211.78
 Japan, 6958, 292.78
 Iceland, 24653, 324.02
-Burkina Faso, 12305, 45.69
+Burkina, 12305, 45.69
 Comoros, 20032, 109.02
 Liberia, 1597, 80.09
 Canada, 26011, 188.74
