@@ -344,14 +344,7 @@ void getTotal(TreeNode* root, int* totalWeight, float* totalValue) {
  * Void: no return value.
  */
 void printMinMaxValue(TreeNode* root) {
-	if (root == NULL) return;
-	//Print weight & value for parcel.
-	printf("%d, %.2f\t", root->weight, root->value);
-	//Traverse left subtree.
-	printMinMaxValue(root->left);
-	//Traverse right subtree.
-	printMinMaxValue(root->right);
-}
+
 /**
  * FUNCTION: printMinMaxWeight
  * DESCRIPTION:
@@ -362,7 +355,16 @@ void printMinMaxValue(TreeNode* root) {
  * Void: no return value.
  */
 void printMinMaxWeight(TreeNode* root) {
-
+    //Handle empty tree.
+    if (root == NULL) return;
+    //Find & print left most weight.
+    TreeNode* tempNode = root;
+    while (tempNode->left != NULL) tempNode = tempNode->left;
+    printf("Minimum weight: %i\n", tempNode->weight);
+    //Find & print right most weight.
+    tempNode = root;
+    while (tempNode->right != NULL) tempNode = tempNode->right;
+    printf("Maximum weight: %i\n", tempNode->weight);
 }
 /**
  * FUNCTION: freeMemory
