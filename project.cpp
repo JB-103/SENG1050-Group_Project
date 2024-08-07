@@ -20,18 +20,17 @@
 #define kMaxDestLength 21
 #define kMaxLineLength kMaxDestLength+16 //5 weight, 7 value, 2 Comma/Spaces.
 #define kBuckets 127
-#define kCountries 73
 #define kMinWeight 100
 #define kMaxWeight 50000
 #define kMinValue 10.00
 #define kMaxValue 2000.00
 #define kFilename "couriers.txt"
 //Menu Items.
-#define kMenu1 1
-#define kMenu2 2
-#define kMenu3 3
-#define kMenu4 4
-#define kMenu5 5
+#define kMenuPrintTree 1
+#define kMenuPrintSubtree 2
+#define kMenuPrintTotal 3
+#define kMenuPrintMinMaxValue 4
+#define kMenuPrintMinMaxWeight 5
 #define kMenuExit 6
 //Status Codes.
 #define kSuccess 0
@@ -80,12 +79,28 @@ int main(void) {
     HashTable* hashTable = createHashTable();
     TreeNode* foundNode = NULL;
     bool active = true;
-    int index = -1, totalWeight = -1;
-    float totalValue = -1, minValue = -1, maxValue = -1;
+    int index = -1, totalWeight = 0;
+    float totalValue = 0, minValue = kMaxValue, maxValue = kMinValue;
     //Parse file.
     int result = collectDataFromFile(hashTable);
-    if (result != kSuccess) return result;
-    //Prompt user.
+    if (result != kSuccess) {
+        switch (result) {
+        case kFileOpenError:
+            printf("Error: Could not open file: %s\n", kFilename);
+            break;
+        case kFileReadError:
+            printf("Error: Encountered errors while reading file: %s\n", kFilename);
+            break;
+        case kFileCloseError:
+            printf("Error: Could not close file: %s\n", kFilename);
+            break;
+        case kMemoryError:
+            printf("Memory allocation failed.\n");
+            break;
+        }
+        return result;
+    }
+    //Prompt user with menu.
     while (active) {
         //Print menu.
         printf("\nMenu:\n");
@@ -101,29 +116,34 @@ int main(void) {
         int menuInput = atoi(userInput);
         //Check input & call functions accordingly.
         switch (menuInput) {
-        case kMenu1:
-            printTree(hashTable->table[getCountry()]);
+        case kMenuPrintTree:
+            index = getCountry();
+            printf("\n");
+            printTree(hashTable->table[index]);
+            printf("\n");
             break;
-        case kMenu2:
+        case kMenuPrintSubtree:
             index = getCountry();
             printf("Enter weight: ");
             fgets(userInput, kMaxDestLength, stdin);
             foundNode = searchInTree(hashTable->table[index], atoi(userInput));
+            printf("\n");
             printTree(foundNode);
+            printf("\n");
             break;
-        case kMenu3:
-            totalWeight = 0;
-            totalValue = 0;
+        case kMenuPrintTotal:
+            totalWeight = totalValue = 0;
             getTotal(hashTable->table[getCountry()], &totalWeight, &totalValue);
-            printf("Total Weight: %i\nTotal Valuation: %.2f\n", totalWeight, totalValue);
+            printf("\nTotal Weight: %i\nTotal Valuation: %.2f\n", totalWeight, totalValue);
             break;
-        case kMenu4:
+        case kMenuPrintMinMaxValue:
             minValue = kMaxValue, maxValue = kMinValue;
             getMinMaxValue(hashTable->table[getCountry()], &minValue, &maxValue);
-            printf("Minimum Valuation: %.2f\nMaximum Valuation: %.2f\n", minValue, maxValue);
+            printf("\nMinimum Valuation: %.2f\nMaximum Valuation: %.2f\n", minValue, maxValue);
             break;
-        case kMenu5:
-            printMinMaxWeight(hashTable->table[getCountry()]);
+        case kMenuPrintMinMaxWeight:
+            index = getCountry();
+            printMinMaxWeight(hashTable->table[index]);
             break;
         case kMenuExit:
             active = false;
@@ -190,10 +210,7 @@ HashTable* createHashTable() {
 int collectDataFromFile(HashTable* hashTable) {
     //Allocate memory for, verify & initialize temporary linked list hashtable.
     ListHashTable* listHashTable = (ListHashTable*)malloc(sizeof(ListHashTable));
-    if (listHashTable == NULL) {
-        printf("Memory allocation failed\n");
-        return kMemoryError;
-    }
+    if (listHashTable == NULL) return kMemoryError;
     for (int counter = 0; counter < kBuckets; counter++) listHashTable->table[counter] = NULL;
     //Variables.
     int counts[kBuckets]{ 0 }, weight = -1;
@@ -201,10 +218,7 @@ int collectDataFromFile(HashTable* hashTable) {
     char destination[kMaxDestLength]{}, tempLine[kMaxLineLength]{};
     //Open file for reading & handle open error.
     FILE* pFile = fopen(kFilename, "r");
-    if (pFile == NULL) {
-        printf("Error: Could not open file: %s\n", kFilename);
-        return kFileOpenError;
-    }
+    if (pFile == NULL) return kFileOpenError;
     //Iterate through file untill end of file or 5000 parcels.
     for (int counter = 1; counter < kMaxParcels && fgets(tempLine, kMaxLineLength, pFile) != NULL; counter++) {
         tempLine[strcspn(tempLine, "\n")] = '\0';
@@ -212,17 +226,14 @@ int collectDataFromFile(HashTable* hashTable) {
         if (tempLine[0] == '\0') continue;
         //Parse line into variables & round value.
         if (sscanf(tempLine, "%[^,], %i, %f", destination, &weight, &value) != 3) {
-            printf("Error parsing line: %s\n", tempLine);
-            return kFileReadError;
+            printf("Error parsing line #%i containing '%s'\n", counter ,tempLine);
+            continue;
         }
         value = (float)roundf(value * 100) / 100;
         //Allocate memory for nodes.
         ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
         //Handle allocation failure.
-        if (newNode == NULL) {
-            printf("Memory allocation failed\n");
-            return kMemoryError;
-        }
+        if (newNode == NULL) return kMemoryError;
         //initialize node.
         newNode->next = NULL;
         newNode->tNode = createTreeNode(destination, weight, value);
@@ -253,27 +264,17 @@ int collectDataFromFile(HashTable* hashTable) {
         if (previous == NULL) {
             newNode->next = *head;
             *head = newNode;
-        }
-        else {
+        } else {
             //Insert in middle or end.
             newNode->next = current;
             previous->next = newNode;
         }
     }
-    //Handle read errors.
+    //Close file & handle read & closing errors.
     if (ferror(pFile)) {
-        printf("Error: Encountered an error while reading file: %s\n", kFilename);
-        if (fclose(pFile) != 0) {
-            printf("Error: Could not close file: %s\n", kFilename);
-            return kFileCloseError;
-        }
+        if (fclose(pFile) != 0) return kFileCloseError;
         return kFileReadError;
-    }
-    //Close file & handle closing error.
-    if (fclose(pFile) != 0) {
-        printf("Error: Could not close file: %s\n", kFilename);
-        return kFileCloseError;
-    }
+    } else if (fclose(pFile) != 0) return kFileCloseError;
     //Convert linked list into balanced tree structure.
     for (int i = 0; i < (sizeof(counts) / sizeof(int)); i++) {
         int n = counts[i];
@@ -283,11 +284,11 @@ int collectDataFromFile(HashTable* hashTable) {
     //Free temp hashtable & linked lists.
     if (listHashTable != NULL) {
         for (int count = 0; count < kBuckets; count++) {
-            ListNode* list = listHashTable->table[count];
-            while (list != NULL) {
-                ListNode* temp = list;
-                list = list->next;
-                free(temp);
+            ListNode* tempHead = listHashTable->table[count];
+            while (tempHead != NULL) {
+                ListNode* tempNode = tempHead;
+                tempHead = tempHead->next;
+                free(tempNode);
             }
         }
         free(listHashTable);
@@ -339,7 +340,7 @@ TreeNode* createTreeNode(char* pDestination, int weight, float value) {
     TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
     //Handle allocation failure
     if (newNode == NULL) {
-        printf("Memory allocation failed\n");
+        printf("Memory allocation failed.\n");
         return NULL;
     }
     //Copy data to newly allocated node.
@@ -366,12 +367,8 @@ void insertInTree(TreeNode** root, TreeNode* item) {
     //Handle empty root.
     if (*root == NULL) *root = item;
     //Check if you should insert the node to the left
-    if (item->weight < (*root)->weight) {
-        insertInTree(&(*root)->left, item);
-    }
-    else if (item->weight > (*root)->weight) {
-        insertInTree(&(*root)->right, item);
-    }
+    if (item->weight < (*root)->weight) insertInTree(&(*root)->left, item);
+    if (item->weight > (*root)->weight) insertInTree(&(*root)->right, item);
 }
 /**
  * FUNCTION: searchInTree
@@ -429,7 +426,7 @@ void printTree(TreeNode* root) {
     //Handle empty tree.
     if (root == NULL) return;
     //Print weight & value for parcel.
-    printf("%d, %.2f\t", root->weight, root->value);
+    printf("%5d, %-7.2f\t|\t", root->weight, root->value);
     //Traverse left subtree.
     printTree(root->left);
     //Traverse right subtree.
@@ -494,7 +491,7 @@ void printMinMaxWeight(TreeNode* root) {
     //Find & print left most weight.
     TreeNode* tempNode = root;
     while (tempNode->left != NULL) tempNode = tempNode->left;
-    printf("Minimum weight: %i\n", tempNode->weight);
+    printf("\nMinimum weight: %i\n", tempNode->weight);
     //Find & print right most weight.
     tempNode = root;
     while (tempNode->right != NULL) tempNode = tempNode->right;
