@@ -18,7 +18,8 @@
 //Constants.
 #define kMaxParcels 5000
 #define kMaxDestLength 21
-#define kMaxLineLength kMaxDestLength+16 //5 weight, 7 value, 2 Comma/Spaces.
+#define kMaxLineLength kMaxDestLength+16 //5 Weight, 7 Value, 2 Comma/Spaces.
+#define kMaxItemsPerLine 5
 #define kBuckets 127
 #define kMinWeight 100
 #define kMaxWeight 50000
@@ -67,7 +68,7 @@ TreeNode* createTreeNode(char*, int, float);
 void insertInTree(TreeNode**, TreeNode*);
 TreeNode* searchInTree(TreeNode*, int);
 int getCountry();
-void printTree(TreeNode*);
+void printTree(TreeNode*, int*);
 void getTotal(TreeNode*, int*, float*);
 void getMinMaxValue(TreeNode*, float*, float*);
 void printMinMaxWeight(TreeNode*);
@@ -79,7 +80,8 @@ int main(void) {
     HashTable* hashTable = createHashTable();
     TreeNode* foundNode = NULL;
     bool active = true;
-    int index = -1, totalWeight = 0;
+    int totalWeight = 0, index = -1;
+    int* items = (int*)malloc(sizeof(int));
     float totalValue = 0, minValue = kMaxValue, maxValue = kMinValue;
     //Parse file.
     int result = collectDataFromFile(hashTable);
@@ -118,17 +120,17 @@ int main(void) {
         switch (menuInput) {
         case kMenuPrintTree:
             index = getCountry();
-            printf("\n");
-            printTree(hashTable->table[index]);
+            *items = 0;
+            printTree(hashTable->table[index], items);
             printf("\n");
             break;
         case kMenuPrintSubtree:
             index = getCountry();
+            *items = 0;
             printf("Enter weight: ");
             fgets(userInput, kMaxDestLength, stdin);
             foundNode = searchInTree(hashTable->table[index], atoi(userInput));
-            printf("\n");
-            printTree(foundNode);
+            printTree(foundNode, items);
             printf("\n");
             break;
         case kMenuPrintTotal:
@@ -155,6 +157,7 @@ int main(void) {
     }
     //Free memory and return success.
     freeMemory(NULL, hashTable);
+    free(items);
     return kSuccess;
 }
 /**
@@ -419,18 +422,21 @@ int getCountry() {
  * Prints full country tree structure & data.
  * PARAMETERS:
  * TreeNode* root: Pointer to root of tree structure.
+ * int* items: Pointer to amount of items printed.
  * RETURNS:
  * Void: no return value.
  */
-void printTree(TreeNode* root) {
+void printTree(TreeNode* root, int* items) {
     //Handle empty tree.
     if (root == NULL) return;
     //Print weight & value for parcel.
+    if ((*items % kMaxItemsPerLine) == 0) printf("\n");
     printf("%5d, %-7.2f\t|\t", root->weight, root->value);
+    (*items)++;
     //Traverse left subtree.
-    printTree(root->left);
+    printTree(root->left, items);
     //Traverse right subtree.
-    printTree(root->right);
+    printTree(root->right, items);
 }
 /**
  * FUNCTION: getTotal
